@@ -39,7 +39,7 @@ if (empty($_SESSION['csrf_token'])) {
                 <!-- AI Pricing Cards Section -->
                 <div class="row g-3 mb-5">
                     <div class="col-md-3 col-sm-6">
-                        <div class="card pricing-card h-100" data-plan="chatgpt_plus" data-price="320000" data-name="ChatGPT Plus 1 Bulan" onclick="selectPlan(this)">
+                        <div class="card card-custom pricing-card h-100" data-plan="chatgpt_plus" data-price="320000" data-name="ChatGPT Plus 1 Bulan" onclick="selectPlan(this)">
                             <div class="pricing-card-badge bg-chatgpt"><i class="bi bi-openai"></i> ChatGPT Plus</div>
                             <div class="pricing-card-body">
                                 <i class="bi bi-chat-right-dots-fill icon-ai text-chatgpt"></i>
@@ -54,7 +54,7 @@ if (empty($_SESSION['csrf_token'])) {
                         </div>
                     </div>
                     <div class="col-md-3 col-sm-6">
-                        <div class="card pricing-card h-100" data-plan="claude_pro" data-price="320000" data-name="Claude Pro 1 Bulan" onclick="selectPlan(this)">
+                        <div class="card card-custom pricing-card h-100" data-plan="claude_pro" data-price="320000" data-name="Claude Pro 1 Bulan" onclick="selectPlan(this)">
                             <div class="pricing-card-badge bg-claude"><i class="bi bi-robot"></i> Claude Pro</div>
                             <div class="pricing-card-body">
                                 <i class="bi bi-cpu-fill icon-ai text-claude"></i>
@@ -69,7 +69,7 @@ if (empty($_SESSION['csrf_token'])) {
                         </div>
                     </div>
                     <div class="col-md-3 col-sm-6">
-                        <div class="card pricing-card h-100" data-plan="gemini_adv" data-price="300000" data-name="Gemini Advanced 1 Bulan" onclick="selectPlan(this)">
+                        <div class="card card-custom pricing-card h-100" data-plan="gemini_adv" data-price="300000" data-name="Gemini Advanced 1 Bulan" onclick="selectPlan(this)">
                             <div class="pricing-card-badge bg-gemini"><i class="bi bi-stars"></i> Gemini Advanced</div>
                             <div class="pricing-card-body">
                                 <i class="bi bi-stars icon-ai text-gemini"></i>
@@ -84,7 +84,7 @@ if (empty($_SESSION['csrf_token'])) {
                         </div>
                     </div>
                     <div class="col-md-3 col-sm-6">
-                        <div class="card pricing-card h-100" data-plan="perplexity_pro" data-price="300000" data-name="Perplexity Pro 1 Bulan" onclick="selectPlan(this)">
+                        <div class="card card-custom pricing-card h-100" data-plan="perplexity_pro" data-price="300000" data-name="Perplexity Pro 1 Bulan" onclick="selectPlan(this)">
                             <div class="pricing-card-badge bg-perplexity"><i class="bi bi-search"></i> Perplexity Pro</div>
                             <div class="pricing-card-body">
                                 <i class="bi bi-search-heart icon-ai text-perplexity"></i>
