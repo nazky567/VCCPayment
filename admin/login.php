@@ -56,7 +56,7 @@ if (isset($_POST['login'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Admin - CloudPay Sandbox</title>
+    <title>Login Admin - CloudPay AI</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
@@ -70,10 +70,10 @@ if (isset($_POST['login'])) {
     <div class="card card-custom w-100" style="max-width: 420px;">
         <div class="card-header-custom text-center py-4">
             <h3 class="navbar-brand justify-content-center mb-1">
-                <i class="bi bi-cloud-fill text-primary"></i>
-                <span class="brand-title">CloudPay Sandbox</span>
+                <i class="bi bi-cpu-fill text-primary me-2"></i>
+                <span class="brand-title">CloudPay AI</span>
             </h3>
-            <p class="text-secondary small mb-0">Portal Manajemen Transaksi Cloud</p>
+            <p class="text-secondary small mb-0">Portal Manajemen Langganan AI</p>
         </div>
         <div class="card-body p-4">
             <?php if (!empty($error)): ?>

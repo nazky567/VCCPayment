@@ -1,11 +1,5 @@
 <?php
-session_start();
-
-// Enforce login
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit;
-}
+require_once 'includes/auth_check.php';
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -71,47 +65,7 @@ if (!isset($_SESSION['user_id'])) {
 <body>
 
     <!-- Header / Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
-        <div class="container">
-            <a class="navbar-brand" href="index.php">
-                <i class="bi bi-cloud-fill"></i>
-                <span class="brand-title">CloudPay Sandbox</span>
-            </a>
-            <button class="navbar-dark navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="index.php"><i class="bi bi-house-door"></i> Beranda</a>
-                    </li>
-                    <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
-                        <li class="nav-item">
-                            <a class="nav-link" href="admin/dashboard.php"><i class="bi bi-speedometer2"></i> Admin Dashboard</a>
-                        </li>
-                    <?php else: ?>
-                        <li class="nav-item">
-                            <a class="nav-link" href="dashboard.php"><i class="bi bi-speedometer2"></i> Dashboard</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="checkout.php"><i class="bi bi-cart3"></i> Checkout</a>
-                        </li>
-                    <?php endif; ?>
-                    <li class="nav-item">
-                        <a class="nav-link" href="health-check.php"><i class="bi bi-heart-pulse"></i> Health Status</a>
-                    </li>
-                    <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
-                        <li class="nav-item">
-                            <a class="nav-link" href="admin/dashboard.php"><i class="bi bi-shield-lock"></i> Admin Portal</a>
-                        </li>
-                    <?php endif; ?>
-                    <li class="nav-item">
-                        <a class="nav-link text-danger" href="admin/logout.php"><i class="bi bi-box-arrow-right"></i> Keluar</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <?php require_once 'includes/navbar.php'; ?>
 
     <!-- Hero Section -->
     <section class="hero-section text-center">

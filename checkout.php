@@ -1,11 +1,5 @@
 <?php
-session_start();
-
-// Enforce login
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit;
-}
+require_once 'includes/auth_check.php';
 
 // Generate CSRF token if it doesn't exist
 if (empty($_SESSION['csrf_token'])) {
@@ -17,7 +11,7 @@ if (empty($_SESSION['csrf_token'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout Pembayaran - CloudPay Sandbox</title>
+    <title>AI Subscription Hub - CloudPay AI</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
@@ -28,58 +22,82 @@ if (empty($_SESSION['csrf_token'])) {
 <body>
 
     <!-- Header / Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
-        <div class="container">
-            <a class="navbar-brand" href="index.php">
-                <i class="bi bi-cloud-fill"></i>
-                <span class="brand-title">CloudPay Sandbox</span>
-            </a>
-            <button class="navbar-dark navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.php"><i class="bi bi-house-door"></i> Beranda</a>
-                    </li>
-                    <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
-                        <li class="nav-item">
-                            <a class="nav-link" href="admin/dashboard.php"><i class="bi bi-speedometer2"></i> Admin Dashboard</a>
-                        </li>
-                    <?php else: ?>
-                        <li class="nav-item">
-                            <a class="nav-link" href="dashboard.php"><i class="bi bi-speedometer2"></i> Dashboard</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="checkout.php"><i class="bi bi-cart3"></i> Checkout</a>
-                        </li>
-                    <?php endif; ?>
-                    <li class="nav-item">
-                        <a class="nav-link" href="health-check.php"><i class="bi bi-heart-pulse"></i> Health Status</a>
-                    </li>
-                    <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
-                        <li class="nav-item">
-                            <a class="nav-link" href="admin/dashboard.php"><i class="bi bi-shield-lock"></i> Admin Portal</a>
-                        </li>
-                    <?php endif; ?>
-                    <li class="nav-item">
-                        <a class="nav-link text-danger" href="admin/logout.php"><i class="bi bi-box-arrow-right"></i> Keluar</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <?php require_once 'includes/navbar.php'; ?>
 
     <!-- Main Content -->
     <div class="container my-5">
         <div class="row justify-content-center">
             <div class="col-lg-10">
                 <div class="text-center mb-5">
-                    <span class="badge bg-primary px-3 py-2 rounded-pill mb-3">SIMULASI TRANSAKSI</span>
-                    <h1 class="display-5 fw-bold">E-Commerce Checkout Form</h1>
+                    <span class="badge bg-primary px-3 py-2 rounded-pill mb-3">LANGGANAN AI PREMIUM</span>
+                    <h1 class="display-5 fw-bold">AI Subscription Hub</h1>
                     <p class="text-secondary col-md-8 mx-auto">
-                        Simulasikan proses pengisian data pelanggan dan pemicuan gerbang pembayaran digital menggunakan API Snap Sandbox.
+                        Pilih paket asisten AI premium Anda. Transaksi diproses secara aman menggunakan simulator Sandbox.
                     </p>
+                </div>
+
+                <!-- AI Pricing Cards Section -->
+                <div class="row g-3 mb-5">
+                    <div class="col-md-3 col-sm-6">
+                        <div class="card pricing-card h-100" data-plan="chatgpt_plus" data-price="320000" data-name="ChatGPT Plus 1 Bulan" onclick="selectPlan(this)">
+                            <div class="pricing-card-badge bg-chatgpt"><i class="bi bi-openai"></i> ChatGPT Plus</div>
+                            <div class="pricing-card-body">
+                                <i class="bi bi-chat-right-dots-fill icon-ai text-chatgpt"></i>
+                                <h5 class="plan-title">Plus</h5>
+                                <div class="plan-price">Rp 320.000<span class="plan-period">/bln</span></div>
+                                <ul class="plan-features text-secondary small">
+                                    <li><i class="bi bi-check2"></i> GPT-4o & GPT-4</li>
+                                    <li><i class="bi bi-check2"></i> Pembuatan Gambar DALL-E</li>
+                                    <li><i class="bi bi-check2"></i> Analisis Data Lanjutan</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="card pricing-card h-100" data-plan="claude_pro" data-price="320000" data-name="Claude Pro 1 Bulan" onclick="selectPlan(this)">
+                            <div class="pricing-card-badge bg-claude"><i class="bi bi-robot"></i> Claude Pro</div>
+                            <div class="pricing-card-body">
+                                <i class="bi bi-cpu-fill icon-ai text-claude"></i>
+                                <h5 class="plan-title">Pro</h5>
+                                <div class="plan-price">Rp 320.000<span class="plan-period">/bln</span></div>
+                                <ul class="plan-features text-secondary small">
+                                    <li><i class="bi bi-check2"></i> Model Claude 3.5 Sonnet</li>
+                                    <li><i class="bi bi-check2"></i> Limit Penggunaan 5x Lebih Banyak</li>
+                                    <li><i class="bi bi-check2"></i> Akses Awal Fitur Baru</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="card pricing-card h-100" data-plan="gemini_adv" data-price="300000" data-name="Gemini Advanced 1 Bulan" onclick="selectPlan(this)">
+                            <div class="pricing-card-badge bg-gemini"><i class="bi bi-stars"></i> Gemini Advanced</div>
+                            <div class="pricing-card-body">
+                                <i class="bi bi-stars icon-ai text-gemini"></i>
+                                <h5 class="plan-title">Advanced</h5>
+                                <div class="plan-price">Rp 300.000<span class="plan-period">/bln</span></div>
+                                <ul class="plan-features text-secondary small">
+                                    <li><i class="bi bi-check2"></i> Akses Google 1.5 Pro</li>
+                                    <li><i class="bi bi-check2"></i> Penyimpanan Google One 2TB</li>
+                                    <li><i class="bi bi-check2"></i> Integrasi ke Gmail & Docs</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="card pricing-card h-100" data-plan="perplexity_pro" data-price="300000" data-name="Perplexity Pro 1 Bulan" onclick="selectPlan(this)">
+                            <div class="pricing-card-badge bg-perplexity"><i class="bi bi-search"></i> Perplexity Pro</div>
+                            <div class="pricing-card-body">
+                                <i class="bi bi-search-heart icon-ai text-perplexity"></i>
+                                <h5 class="plan-title">Pro</h5>
+                                <div class="plan-price">Rp 300.000<span class="plan-period">/bln</span></div>
+                                <ul class="plan-features text-secondary small">
+                                    <li><i class="bi bi-check2"></i> Pilihan Model Copilot Lanjutan</li>
+                                    <li><i class="bi bi-check2"></i> Unggah & Analisis File Unlimited</li>
+                                    <li><i class="bi bi-check2"></i> Kredit API bulanan gratis</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="row g-4">
@@ -116,21 +134,23 @@ if (empty($_SESSION['csrf_token'])) {
                                         <div class="col-md-7">
                                             <label for="product_select" class="form-label form-label-custom">Pilih Produk</label>
                                             <select class="form-select form-control-custom" id="product_select" name="product_select" onchange="updateProductDetails(this)">
-                                                <option value="cloud_pro" data-price="250000" selected>Cloud VPS Hosting Pro</option>
-                                                <option value="cloud_ent" data-price="500000">Enterprise Cloud Cluster</option>
-                                                <option value="domain_ssl" data-price="125000">Domain .COM + Premium SSL</option>
+                                                <option value="chatgpt_plus" data-price="320000" selected>ChatGPT Plus 1 Bulan</option>
+                                                <option value="claude_pro" data-price="320000">Claude Pro 1 Bulan</option>
+                                                <option value="gemini_adv" data-price="300000">Gemini Advanced 1 Bulan</option>
+                                                <option value="perplexity_pro" data-price="300000">Perplexity Pro 1 Bulan</option>
+                                                <option value="bundle" data-price="600000">ChatGPT Plus + Claude Pro (Bundle)</option>
                                                 <option value="custom">-- Input Custom --</option>
                                             </select>
                                         </div>
                                         <div class="col-md-5">
                                             <label for="amount" class="form-label form-label-custom">Harga Produk (Rp)</label>
-                                            <input type="number" class="form-control form-control-custom" id="amount" name="amount" value="250000" readonly required>
+                                            <input type="number" class="form-control form-control-custom" id="amount" name="amount" value="320000" readonly required>
                                         </div>
                                         <div class="col-12" id="custom_product_field" style="display: none;">
                                             <label for="product_name_custom" class="form-label form-label-custom">Nama Produk Custom</label>
-                                            <input type="text" class="form-control form-control-custom" id="product_name_custom" name="product_name_custom" placeholder="Nama Layanan Cloud Custom">
+                                            <input type="text" class="form-control form-control-custom" id="product_name_custom" name="product_name_custom" placeholder="Nama Layanan AI Custom">
                                         </div>
-                                        <input type="hidden" id="product_name" name="product_name" value="Cloud VPS Hosting Pro">
+                                        <input type="hidden" id="product_name" name="product_name" value="ChatGPT Plus 1 Bulan">
 
                                         <div class="col-12 mt-4">
                                             <button type="submit" class="btn btn-gradient-primary w-100 py-3" id="btnSubmitPay">
@@ -161,14 +181,14 @@ if (empty($_SESSION['csrf_token'])) {
 
                                     <div class="mb-3">
                                         <label class="text-secondary small">Item terpilih</label>
-                                        <h5 id="summary_product_name" class="fw-semibold">Cloud VPS Hosting Pro</h5>
+                                        <h5 id="summary_product_name" class="fw-semibold">ChatGPT Plus 1 Bulan</h5>
                                     </div>
 
                                     <hr class="border-secondary my-3">
 
                                     <div class="d-flex justify-content-between align-items-center mb-3">
                                         <span class="text-secondary">Subtotal</span>
-                                        <span class="fw-semibold text-white" id="summary_subtotal">Rp 250.000</span>
+                                        <span class="fw-semibold text-white" id="summary_subtotal">Rp 320.000</span>
                                     </div>
                                     <div class="d-flex justify-content-between align-items-center mb-3">
                                         <span class="text-secondary">PPN (11%)</span>
@@ -177,7 +197,7 @@ if (empty($_SESSION['csrf_token'])) {
                                     <hr class="border-secondary my-3">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <span class="fw-bold">Total Pembayaran</span>
-                                        <span class="fs-4 fw-bold text-primary" id="summary_total">Rp 250.000</span>
+                                        <span class="fs-4 fw-bold text-primary" id="summary_total">Rp 320.000</span>
                                     </div>
                                 </div>
 
@@ -197,10 +217,22 @@ if (empty($_SESSION['csrf_token'])) {
     <!-- Footer -->
     <footer>
         <div class="container text-center">
-            <p class="mb-1"><strong>CloudPay Sandbox Simulator</strong> &copy; 2026. Tugas Akhir Virtualisasi Cloud Computing.</p>
+            <p class="mb-1"><strong>CloudPay AI Simulator</strong> &copy; 2026. Tugas Akhir Virtualisasi Cloud Computing.</p>
             <p class="text-secondary mb-0" style="font-size: 0.8rem;">Dikembangkan untuk simulasi infrastruktur cloud hosting cPanel.</p>
         </div>
     </footer>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1055;">
+        <div id="validationToast" class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true" style="backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;">
+            <div class="d-flex">
+                <div class="toast-body">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i> <span id="toastMessage">Semua data form harus diisi dengan benar.</span>
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
 
     <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -216,6 +248,15 @@ if (empty($_SESSION['csrf_token'])) {
             const summaryProductName = document.getElementById('summary_product_name');
             const summarySubtotal = document.getElementById('summary_subtotal');
             const summaryTotal = document.getElementById('summary_total');
+            
+            // Sync pricing cards selection styling
+            document.querySelectorAll('.pricing-card').forEach(c => {
+                c.classList.remove('active');
+            });
+            const activeCard = document.querySelector(`.pricing-card[data-plan="${select.value}"]`);
+            if (activeCard) {
+                activeCard.classList.add('active');
+            }
             
             if (select.value === 'custom') {
                 amountInput.readOnly = false;

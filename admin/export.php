@@ -1,12 +1,7 @@
 <?php
-session_start();
+define('IS_ADMIN_DIR', true);
+require_once __DIR__ . '/../includes/auth_check.php';
 require_once __DIR__ . '/../config/database.php';
-
-// Access control
-if (!isset($_SESSION['user_id'])) {
-    header("Location: ../login.php");
-    exit;
-}
 
 $role = $_SESSION['role'];
 $username = $_SESSION['username'];

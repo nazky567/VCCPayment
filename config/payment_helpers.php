@@ -26,73 +26,81 @@ function generateInvoicePDF($trx, $status, $payment_type) {
         <meta charset="utf-8">
         <title>Invoice - ' . $invoice_no . '</title>
         <style>
-            body { font-family: sans-serif; color: #333; line-height: 1.4; padding: 20px; }
-            .header { border-bottom: 2px solid #6366F1; padding-bottom: 20px; margin-bottom: 20px; }
-            .logo { font-size: 24px; font-weight: bold; color: #6366F1; }
-            .title { text-align: right; font-size: 20px; color: #555; }
-            .details-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-            .details-table td { padding: 8px 0; vertical-align: top; }
-            .items-table { width: 100%; border-collapse: collapse; margin-top: 30px; }
-            .items-table th { background-color: #F3F4F6; padding: 10px; text-align: left; font-size: 14px; border-bottom: 1px solid #E5E7EB; }
-            .items-table td { padding: 12px 10px; border-bottom: 1px solid #E5E7EB; font-size: 14px; }
-            .total-row { font-size: 16px; font-weight: bold; background-color: #EEF2FF; }
-            .status-badge { display: inline-block; padding: 4px 10px; background-color: #DEF7EC; color: #03543F; font-size: 12px; font-weight: bold; border-radius: 4px; }
-            .footer { margin-top: 50px; text-align: center; font-size: 12px; color: #9CA3AF; border-top: 1px solid #E5E7EB; padding-top: 20px; }
+            body { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; color: #1e293b; line-height: 1.5; padding: 10px; margin: 0; }
+            .invoice-box { max-width: 800px; margin: auto; }
+            .header-table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+            .logo { font-size: 26px; font-weight: 800; color: #8B5CF6; letter-spacing: -0.5px; }
+            .logo span { color: #1e293b; font-weight: 400; }
+            .title { text-align: right; font-size: 24px; font-weight: 300; color: #64748b; text-transform: uppercase; letter-spacing: 1px; }
+            .divider { height: 3px; background: linear-gradient(90deg, #8B5CF6 0%, #EC4899 100%); margin-bottom: 30px; }
+            .details-table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+            .details-table td { padding: 0 0 10px 0; vertical-align: top; font-size: 13px; }
+            .details-title { font-weight: 700; color: #475569; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; margin-bottom: 5px; }
+            .items-table { width: 100%; border-collapse: collapse; margin-top: 10px; margin-bottom: 30px; }
+            .items-table th { background-color: #f8fafc; padding: 12px 10px; text-align: left; font-size: 11px; font-weight: 700; color: #475569; text-transform: uppercase; border-bottom: 1px solid #e2e8f0; }
+            .items-table td { padding: 16px 10px; border-bottom: 1px solid #f1f5f9; font-size: 13px; color: #334155; }
+            .total-row td { font-size: 15px; font-weight: 700; color: #1e293b; border-top: 2px solid #e2e8f0; background-color: #f8fafc; padding: 14px 10px; }
+            .status-badge { display: inline-block; padding: 4px 12px; background-color: #ecfdf5; color: #047857; font-size: 11px; font-weight: 700; border-radius: 50px; text-transform: uppercase; border: 1px solid #a7f3d0; }
+            .footer { margin-top: 60px; text-align: center; font-size: 11px; color: #94a3b8; border-top: 1px solid #e2e8f0; padding-top: 20px; line-height: 1.6; }
         </style>
     </head>
     <body>
-        <table style="width:100%">
-            <tr>
-                <td class="logo">CloudPay Sandbox</td>
-                <td class="title">INVOICE</td>
-            </tr>
-        </table>
-        
-        <div class="header"></div>
-        
-        <table class="details-table">
-            <tr>
-                <td style="width:50%">
-                    <strong>Diterbitkan Untuk:</strong><br>
-                    ' . htmlspecialchars($trx['customer_name']) . '<br>
-                    Email: ' . htmlspecialchars($trx['email']) . '<br>
-                    HP: ' . htmlspecialchars($trx['phone']) . '
-                </td>
-                <td style="width:50%; text-align:right;">
-                    <strong>Nomor Invoice:</strong> ' . $invoice_no . '<br>
-                    <strong>Order ID:</strong> ' . htmlspecialchars($trx['order_id']) . '<br>
-                    <strong>Tanggal:</strong> ' . date('d F Y') . '<br>
-                    <strong>Status:</strong> <span class="status-badge">SUKSES</span>
-                </td>
-            </tr>
-        </table>
-        
-        <table class="items-table">
-            <thead>
+        <div class="invoice-box">
+            <table class="header-table">
                 <tr>
-                    <th>Deskripsi Layanan / Produk</th>
-                    <th style="text-align:right;">Harga (IDR)</th>
+                    <td class="logo">CloudPay <span>AI</span></td>
+                    <td class="title">INVOICE</td>
                 </tr>
-            </thead>
-            <tbody>
+            </table>
+            
+            <div class="divider"></div>
+            
+            <table class="details-table">
                 <tr>
-                    <td>' . htmlspecialchars($trx['product_name']) . '</td>
-                    <td style="text-align:right;">Rp ' . number_format($trx['amount'], 0, ',', '.') . '</td>
+                    <td style="width: 50%;">
+                        <div class="details-title">Diterbitkan Untuk:</div>
+                        <strong>' . htmlspecialchars($trx['customer_name']) . '</strong><br>
+                        Email: ' . htmlspecialchars($trx['email']) . '<br>
+                        No. HP: ' . htmlspecialchars($trx['phone']) . '
+                    </td>
+                    <td style="width: 50%; text-align: right;">
+                        <div class="details-title">Detail Transaksi:</div>
+                        <strong>Nomor Invoice:</strong> ' . $invoice_no . '<br>
+                        <strong>Order ID:</strong> ' . htmlspecialchars($trx['order_id']) . '<br>
+                        <strong>Tanggal:</strong> ' . date('d F Y') . '<br>
+                        <strong>Status:</strong> <span class="status-badge">SUKSES</span>
+                    </td>
                 </tr>
-                <tr class="total-row">
-                    <td>Total Bayar</td>
-                    <td style="text-align:right;">Rp ' . number_format($trx['amount'], 0, ',', '.') . '</td>
-                </tr>
-            </tbody>
-        </table>
-        
-        <div style="margin-top:20px; font-size:12px;">
-            <p><strong>Metode Pembayaran:</strong> ' . strtoupper(htmlspecialchars($payment_type ?: 'Sandbox Transfer')) . '</p>
-            <p><em>Pembayaran ini diproses secara aman menggunakan sistem Payment Gateway Sandbox. Ini adalah dokumen transaksi sah untuk demo Virtualisasi Cloud.</em></p>
-        </div>
-        
-        <div class="footer">
-            CloudPay Sandbox Simulator - Cloud Computing Virtualization &copy; 2026
+            </table>
+            
+            <table class="items-table">
+                <thead>
+                    <tr>
+                        <th>Deskripsi Layanan / Produk</th>
+                        <th style="text-align: right; width: 150px;">Total Tagihan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>' . htmlspecialchars($trx['product_name']) . '</strong><br><span style="font-size:11px; color:#64748b;">Langganan AI Premium Suite</span></td>
+                        <td style="text-align: right; font-weight: 600;">Rp ' . number_format($trx['amount'], 0, ',', '.') . '</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td>Total Bayar</td>
+                        <td style="text-align: right; color: #8B5CF6;">Rp ' . number_format($trx['amount'], 0, ',', '.') . '</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div style="margin-top: 30px; font-size: 12px; color: #64748b;">
+                <p><strong>Metode Pembayaran:</strong> ' . strtoupper(htmlspecialchars($payment_type ?: 'Sandbox Transfer')) . '</p>
+                <p style="font-style: italic; font-size: 11px;">Pembayaran ini diproses secara aman menggunakan sistem Payment Gateway CloudPay AI Sandbox. Ini adalah dokumen transaksi sah simulasi Virtualisasi Cloud.</p>
+            </div>
+            
+            <div class="footer">
+                CloudPay AI Premium Hub - Cloud Computing Virtualization &copy; 2026<br>
+                Gedung TIK Puskom Kampus, Universitas Lampung.
+            </div>
         </div>
     </body>
     </html>';
@@ -161,44 +169,60 @@ function sendNotificationEmail($trx, $status, $pdfPath) {
         
         // HTML Receipt Style Template
         $mail->Body = '
-        <div style="font-family: Arial, sans-serif; background-color: #f4f5f7; padding: 30px; color: #333;">
-            <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.08); border-top: 6px solid #6366F1;">
-                <div style="padding: 25px; border-bottom: 1px solid #f0f0f0; text-align: center;">
-                    <h2 style="color: #6366F1; margin: 0; font-size: 24px;">CloudPay Sandbox</h2>
-                    <p style="color: #666; margin: 5px 0 0 0; font-size: 14px;">Simulasi Pembayaran Virtualisasi Cloud</p>
+        <div style="font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, Helvetica, Arial, sans-serif; background-color: #fafafa; padding: 40px 10px; color: #1e293b; line-height: 1.6;">
+            <div style="max-width: 580px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid #e2e8f0;">
+                
+                <!-- Purple Glowing Header Border -->
+                <div style="height: 6px; background: linear-gradient(90deg, #8B5CF6 0%, #EC4899 100%);"></div>
+                
+                <!-- Brand Header -->
+                <div style="padding: 30px 25px 25px 25px; text-align: center; border-bottom: 1px solid #f1f5f9;">
+                    <h2 style="color: #8B5CF6; margin: 0; font-size: 26px; font-weight: 800; letter-spacing: -0.5px;">CloudPay <span style="color:#1e293b; font-weight:400;">AI</span></h2>
+                    <p style="color: #64748b; margin: 5px 0 0 0; font-size: 13px; text-transform: uppercase; letter-spacing: 1px;">Kwitansi Pembayaran Langganan AI</p>
                 </div>
-                <div style="padding: 30px;">
-                    <p style="font-size: 16px; margin-top: 0;">Halo, <strong>' . htmlspecialchars($trx['customer_name']) . '</strong></p>
-                    <p style="color: #555; line-height: 1.5;">Notifikasi transaksi Anda dari sistem payment gateway sandbox.</p>
+                
+                <!-- Main Body -->
+                <div style="padding: 30px 25px;">
+                    <p style="font-size: 15px; margin-top: 0; color: #334155;">Halo <strong>' . htmlspecialchars($trx['customer_name']) . '</strong>,</p>
+                    <p style="color: #475569; font-size: 14px; margin-bottom: 25px;">Terima kasih atas transaksi Anda. Berikut adalah rincian pembayaran langganan AI Anda yang telah berhasil diproses oleh secure sandbox.</p>
                     
-                    <div style="background-color: #fafbfc; border: 1px solid #eaeaea; border-radius: 6px; padding: 20px; margin: 25px 0;">
-                        <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+                    <!-- Details Card -->
+                    <div style="background-color: #f8fafc; border: 1px solid #edf2f7; border-radius: 8px; padding: 20px; margin-bottom: 30px;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 13px; color: #334155;">
                             <tr>
-                                <td style="padding: 6px 0; color: #666;">Order ID:</td>
-                                <td style="padding: 6px 0; font-weight: bold; text-align: right;">' . htmlspecialchars($trx['order_id']) . '</td>
+                                <td style="padding: 8px 0; color: #64748b; font-weight: 500;">Order ID:</td>
+                                <td style="padding: 8px 0; font-weight: 700; text-align: right; font-family: monospace; font-size:14px;">' . htmlspecialchars($trx['order_id']) . '</td>
                             </tr>
                             <tr>
-                                <td style="padding: 6px 0; color: #666;">Produk:</td>
-                                <td style="padding: 6px 0; font-weight: bold; text-align: right;">' . htmlspecialchars($trx['product_name']) . '</td>
+                                <td style="padding: 8px 0; color: #64748b; font-weight: 500;">Produk AI:</td>
+                                <td style="padding: 8px 0; font-weight: 700; text-align: right; color: #1e293b;">' . htmlspecialchars($trx['product_name']) . '</td>
                             </tr>
                             <tr>
-                                <td style="padding: 6px 0; color: #666;">Nominal:</td>
-                                <td style="padding: 6px 0; font-weight: bold; text-align: right; color: #6366F1; font-size: 16px;">Rp ' . number_format($trx['amount'], 0, ',', '.') . '</td>
+                                <td style="padding: 8px 0; color: #64748b; font-weight: 500;">Nominal Bayar:</td>
+                                <td style="padding: 8px 0; font-weight: 800; text-align: right; color: #8B5CF6; font-size: 16px;">Rp ' . number_format($trx['amount'], 0, ',', '.') . '</td>
                             </tr>
                             <tr>
-                                <td style="padding: 6px 0; color: #666;">Status:</td>
-                                <td style="padding: 6px 0; font-weight: bold; text-align: right; color: ' . $status_color . ';">' . $status_label . '</td>
+                                <td style="padding: 8px 0; color: #64748b; font-weight: 500;">Status Transaksi:</td>
+                                <td style="padding: 8px 0; font-weight: 700; text-align: right;"><span style="background-color: ' . ($status == 'settlement' || $status == 'capture' ? '#ecfdf5' : '#fef2f2') . '; color: ' . $status_color . '; padding: 3px 10px; border-radius: 50px; font-size: 11px; border: 1px solid ' . ($status == 'settlement' || $status == 'capture' ? '#a7f3d0' : '#fecaca') . ';">' . $status_label . '</span></td>
                             </tr>
                             <tr>
-                                <td style="padding: 6px 0; color: #666;">Tanggal:</td>
-                                <td style="padding: 6px 0; font-weight: bold; text-align: right;">' . date('d F Y H:i') . ' WIB</td>
+                                <td style="padding: 8px 0; color: #64748b; font-weight: 500;">Waktu Pembayaran:</td>
+                                <td style="padding: 8px 0; font-weight: 700; text-align: right;">' . date('d F Y H:i') . ' WIB</td>
                             </tr>
                         </table>
                     </div>
                     
-                    <p style="color: #666; font-size: 13px; line-height: 1.5; text-align: center; border-top: 1px solid #f0f0f0; padding-top: 20px; margin-top: 30px;">
-                        Email ini dikirim secara otomatis oleh simulator payment gateway tugas kuliah Virtualisasi Cloud Computing. Lampiran invoice PDF akan disertakan apabila pembayaran berhasil (Success).
-                    </p>
+                    <!-- Action Info -->
+                    <div style="text-align: center; margin-bottom: 25px;">
+                        <p style="font-size: 13px; color: #64748b; margin: 0;">Berkas invoice PDF resmi telah dilampirkan langsung pada email ini.</p>
+                    </div>
+                    
+                    <!-- Divider -->
+                    <div style="border-top: 1px solid #f1f5f9; padding-top: 20px; margin-top: 25px;">
+                        <p style="color: #94a3b8; font-size: 11px; line-height: 1.6; text-align: center; margin: 0;">
+                            Email ini dikirim secara otomatis oleh simulator sistem tugas besar Virtualisasi Cloud Computing. Jika Anda memerlukan bantuan presentasi, silakan hubungi tim pengembang Anda.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>';

@@ -1,13 +1,7 @@
 <?php
-session_start();
+require_once 'includes/auth_check.php';
 require_once __DIR__ . '/config/database.php';
 require_once __DIR__ . '/config/midtrans.php';
-
-// Enforce login
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit;
-}
 
 $order_id = filter_input(INPUT_GET, 'order_id', FILTER_SANITIZE_SPECIAL_CHARS);
 
@@ -46,7 +40,7 @@ $client_key = getenv('MIDTRANS_CLIENT_KEY') ?: 'SB-Mid-client-placeholder';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Selesaikan Pembayaran - CloudPay Sandbox</title>
+    <title>Selesaikan Pembayaran - CloudPay AI</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
@@ -62,14 +56,7 @@ $client_key = getenv('MIDTRANS_CLIENT_KEY') ?: 'SB-Mid-client-placeholder';
 <body>
 
     <!-- Header / Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
-        <div class="container">
-            <a class="navbar-brand" href="index.php">
-                <i class="bi bi-cloud-fill"></i>
-                <span class="brand-title">CloudPay Sandbox</span>
-            </a>
-        </div>
-    </nav>
+    <?php require_once 'includes/navbar.php'; ?>
 
     <!-- Main Content -->
     <div class="container my-5">

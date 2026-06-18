@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once 'includes/auth_check.php';
 require_once __DIR__ . '/config/database.php';
 require_once __DIR__ . '/config/midtrans.php';
 
@@ -92,30 +92,7 @@ function formatBytes($bytes, $precision = 2) {
 <body>
 
     <!-- Header / Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
-        <div class="container">
-            <a class="navbar-brand" href="index.php">
-                <i class="bi bi-cloud-fill"></i>
-                <span class="brand-title">CloudPay Sandbox</span>
-            </a>
-            <button class="navbar-dark navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="checkout.php"><i class="bi bi-cart3"></i> Checkout</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="health-check.php"><i class="bi bi-heart-pulse"></i> Health Status</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="admin/login.php"><i class="bi bi-shield-lock"></i> Admin Portal</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <?php require_once 'includes/navbar.php'; ?>
 
     <!-- Main Content -->
     <div class="container my-5">

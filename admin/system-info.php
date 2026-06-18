@@ -1,16 +1,8 @@
 <?php
-session_start();
+define('IS_ADMIN_DIR', true);
+require_once __DIR__ . '/../includes/auth_check.php';
+enforceAdmin();
 require_once __DIR__ . '/../config/database.php';
-
-// Access control: Ensure user is logged in as admin
-if (!isset($_SESSION['user_id'])) {
-    header("Location: ../login.php");
-    exit;
-}
-if ($_SESSION['role'] !== 'admin') {
-    header("Location: ../dashboard.php");
-    exit;
-}
 
 $role = $_SESSION['role'];
 $username = $_SESSION['username'];
@@ -97,40 +89,7 @@ function formatBytesSize($bytes, $precision = 2) {
 <body>
 
     <!-- Header / Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
-        <div class="container-fluid px-4">
-            <a class="navbar-brand" href="dashboard.php">
-                <i class="bi bi-cloud-fill"></i>
-                <span class="brand-title">CloudPay Sandbox Admin</span>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="dashboard.php"><i class="bi bi-speedometer2"></i> Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="transactions.php"><i class="bi bi-wallet2"></i> Transaksi</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="callback-monitor.php"><i class="bi bi-terminal-dash"></i> Live Monitor</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="system-info.php"><i class="bi bi-cpu"></i> Info Server</a>
-                    </li>
-                </ul>
-                <div class="navbar-nav ms-auto align-items-center">
-                    <span class="text-secondary me-3" style="font-size:0.9rem;">
-                        Halo, <strong class="text-white"><?php echo htmlspecialchars($username); ?></strong> 
-                        <span class="badge bg-primary text-uppercase" style="font-size: 0.7rem;"><?php echo htmlspecialchars($role); ?></span>
-                    </span>
-                    <a href="logout.php" class="btn btn-outline-danger btn-sm py-1.5 px-3"><i class="bi bi-box-arrow-right"></i> Keluar</a>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <?php require_once '../includes/navbar.php'; ?>
 
     <!-- Main Content -->
     <div class="container-fluid px-4 my-4">

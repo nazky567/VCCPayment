@@ -40,22 +40,38 @@ function getPHPMailerInstance() {
     $mail = new \PHPMailer\PHPMailer\PHPMailer(true);
     
     // Server settings
-    $mail->isSMTP();
-    $mail->Host       = getenv('SMTP_HOST') ?: 'sandbox.smtp.mailtrap.io';
-    $mail->SMTPAuth   = true;
-    $mail->Username   = getenv('SMTP_USER') ?: '';
-    $mail->Password   = getenv('SMTP_PASS') ?: '';
-    $mail->SMTPSecure = getenv('SMTP_ENCRYPTION') ?: 'tls';
-    $mail->Port       = getenv('SMTP_PORT') ?: 2525;
+    $smtp_host = getenv('SMTP_HOST') ?: 'sandbox.smtp.mailtrap.io';
     
-    // Disable SSL verification for local environment compatibility
-    $mail->SMTPOptions = array(
-        'ssl' => array(
-            'verify_peer' => false,
-            'verify_peer_name' => false,
-            'allow_self_signed' => true
-        )
-    );
+    if ($smtp_host === 'mail' || $smtp_host === 'phpmail') {
+        $mail->isMail();
+    } else {
+        $mail->isSMTP();
+        $mail->Host       = $smtp_host;
+        
+        $smtp_user = getenv('SMTP_USER') ?: '';
+        $mail->SMTPAuth   = !empty($smtp_user);
+        $mail->Username   = $smtp_user;
+        $mail->Password   = getenv('SMTP_PASS') ?: '';
+        
+        $encryption = getenv('SMTP_ENCRYPTION');
+        if ($encryption === 'none' || $encryption === 'false' || $encryption === '' || !$encryption) {
+            $mail->SMTPSecure = '';
+            $mail->SMTPAutoTLS = false;
+        } else {
+            $mail->SMTPSecure = $encryption;
+        }
+        
+        $mail->Port       = getenv('SMTP_PORT') ?: 25;
+        
+        // Disable SSL verification for local environment compatibility
+        $mail->SMTPOptions = array(
+            'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            )
+        );
+    }
     
     // Default Sender
     $mail->setFrom(

@@ -1,12 +1,6 @@
 <?php
-session_start();
+require_once 'includes/auth_check.php';
 require_once __DIR__ . '/config/database.php';
-
-// Access Control: Must be logged in as user
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit;
-}
 
 // Redirect admin to their own dashboard
 if ($_SESSION['role'] === 'admin') {
@@ -65,34 +59,7 @@ try {
 <body>
 
     <!-- Header / Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
-        <div class="container-fluid px-4">
-            <a class="navbar-brand" href="dashboard.php">
-                <i class="bi bi-cloud-fill text-primary"></i>
-                <span class="brand-title">CloudPay Sandbox</span>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="dashboard.php"><i class="bi bi-speedometer2"></i> Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="checkout.php"><i class="bi bi-cart3"></i> Buat Pembayaran</a>
-                    </li>
-                </ul>
-                <div class="navbar-nav ms-auto align-items-center">
-                    <span class="text-secondary me-3" style="font-size:0.9rem;">
-                        Halo, <strong class="text-white"><?php echo htmlspecialchars($username); ?></strong> 
-                        <span class="badge bg-primary text-uppercase" style="font-size: 0.7rem;">USER</span>
-                    </span>
-                    <a href="admin/logout.php" class="btn btn-outline-danger btn-sm py-1.5 px-3"><i class="bi bi-box-arrow-right"></i> Keluar</a>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <?php require_once 'includes/navbar.php'; ?>
 
     <!-- Main Content -->
     <div class="container-fluid px-4 my-4">
@@ -103,7 +70,7 @@ try {
                     <div class="d-md-flex justify-content-between align-items-center">
                         <div>
                             <h2 class="mb-1 text-white">Selamat Datang, <?php echo htmlspecialchars($username); ?>!</h2>
-                            <p class="text-secondary mb-0">Kelola simulasi pembelian VPS, Storage, dan layanan cloud virtual Anda di panel sandbox ini.</p>
+                            <p class="text-secondary mb-0">Kelola simulasi pembelian langganan AI Premium (AI Pro) Anda di panel sandbox ini.</p>
                         </div>
                         <div class="mt-3 mt-md-0">
                             <a href="checkout.php" class="btn btn-gradient-primary btn-lg"><i class="bi bi-cart-plus me-1"></i> Beli Layanan Baru</a>

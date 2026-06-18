@@ -57,7 +57,7 @@ if (isset($_POST['login_user'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Gateway - CloudPay Sandbox</title>
+    <title>Login Gateway - CloudPay AI</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
@@ -115,10 +115,10 @@ if (isset($_POST['login_user'])) {
             <!-- Header Brand -->
             <div class="text-center py-4 border-bottom border-secondary" style="background: rgba(15, 23, 42, 0.25);">
                 <h3 class="navbar-brand justify-content-center mb-1">
-                    <i class="bi bi-cloud-fill text-primary me-2"></i>
-                    <span class="brand-title">CloudPay Sandbox Portal</span>
+                    <i class="bi bi-cpu-fill text-primary me-2"></i>
+                    <span class="brand-title">CloudPay AI Portal</span>
                 </h3>
-                <p class="text-secondary small mb-0">Platform Integrasi API Midtrans & Virtualisasi Cloud</p>
+                <p class="text-secondary small mb-0">Platform Penjualan Langganan AI Premium & Cloud Sandbox</p>
             </div>
             
             <div class="row g-0 p-4 p-md-5">

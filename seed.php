@@ -31,11 +31,11 @@ try {
 
 $names = ['Budi Santoso', 'Siti Rahma', 'Dewi Lestari', 'Agus Prayogo', 'Andi Wijaya', 'Eko Susilo', 'Rina Melati', 'Hendra Gunawan', 'Mega Utami', 'Rian Hidayat', 'Ahmad Fauzi', 'Sari Indah', 'Joko Widodo', 'Fajar Pratama', 'Putri Ayu', 'Rizky Ramadhan', 'Denny Siregar', 'Wawan Kurniawan', 'Lutfi Hakim', 'Diana Putri'];
 $products = [
-    ['name' => 'Cloud VPS Hosting Pro', 'price' => 250000],
-    ['name' => 'Enterprise Cloud Cluster', 'price' => 500000],
-    ['name' => 'Domain .COM + Premium SSL', 'price' => 125000],
-    ['name' => 'Cloud Backup Service Enterprise', 'price' => 180000],
-    ['name' => 'Dedicated Storage Cloud Server', 'price' => 350000]
+    ['name' => 'ChatGPT Plus 1 Bulan', 'price' => 320000],
+    ['name' => 'Claude Pro 1 Bulan', 'price' => 320000],
+    ['name' => 'Gemini Advanced 1 Bulan', 'price' => 300000],
+    ['name' => 'Perplexity Pro 1 Bulan', 'price' => 300000],
+    ['name' => 'ChatGPT Plus + Claude Pro (Bundle)', 'price' => 600000]
 ];
 $statuses = ['settlement', 'pending', 'expire', 'deny', 'cancel'];
 $payment_types = ['credit_card', 'bank_transfer', 'qris', 'gopay', 'shopeepay'];

@@ -1,6 +1,4 @@
--- Create Database if not exists
-CREATE DATABASE IF NOT EXISTS `payment_sandbox` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE `payment_sandbox`;
+-- Removed hardcoded CREATE DATABASE and USE statements
 
 -- 1. Users Table (Role-based access)
 CREATE TABLE IF NOT EXISTS `users` (
