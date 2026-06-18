@@ -62,7 +62,7 @@ if (isset($_POST['login'])) {
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <!-- Custom Style -->
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/style.css?v=2">
 </head>
 <body class="d-flex align-items-center justify-content-center" style="min-height: 100vh; padding: 20px;">
 

@@ -46,7 +46,7 @@ $client_key = getenv('MIDTRANS_CLIENT_KEY') ?: 'SB-Mid-client-placeholder';
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <!-- Custom Style -->
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css?v=2">
     
     <?php if (!$is_mock): ?>
         <!-- Midtrans SNAP JS -->
